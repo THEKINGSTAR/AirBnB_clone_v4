@@ -19,8 +19,9 @@ $(document).ready(function(){
 
     function updateAmenityList()
     {
-        var amintyList = Object.values(amenityIds).join(',');
-        $('.amenities h4').text(amintyList);
+        // update the h4 tag and make space after this semicolon except last element
+        var amenityList = Object.values(amenityIds).sort().join(', ');
+        $('.amenities h4').text(amenityList);
     }
 
 });
