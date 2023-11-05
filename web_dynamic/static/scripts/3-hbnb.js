@@ -51,10 +51,24 @@ function searchPlaces () {
     dataType: 'json',
     contentType: 'application/json',
 })
-.done(function(data, textStatus, jqXHR) {
-    console.log("data: " + data);
-    console.log("textStatus: " + textStatus);
-    console.log("jqXHR: " + jqXHR);
+.done(function(serchResponse) {
+      for (const placeObj of serchResponse) {
+        const placeData = ['<article>',
+          '<div class="title_box">',
+        `<h2>${placeObj.name}</h2>`,
+        `<div class="price_by_night">$${placeObj.price_by_night}</div>`,
+        '</div>',
+        '<div class="information">',
+        `<div class="max_guest">${placeObj.max_guest} Guest${placeObj.max_guest != 1 ? 's' : ''}</div>`,
+        `<div class="number_rooms">${placeObj.number_rooms} Bedroom${placeObj.number_rooms != 1 ? 's' : ''}</div>`,
+        `<div class="number_bathrooms">${placeObj.number_bathrooms} Bathroom${placeObj.number_bathrooms != 1 ? 's' : ''}</div>`,
+        '</div>',
+        '<div class="description">',
+        `${placeObj.description}`,
+        '</div>',
+        '</article>'];
+        $('SECTION.places').append(placeData.join(''));
+      }
 })
 .fail(function() {
     console.log("Error while calling search endpoint");
