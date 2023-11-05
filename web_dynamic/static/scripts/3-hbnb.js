@@ -43,16 +43,20 @@ $(document).ready(function(){
 });
 // task 3 - Search
 function searchPlaces () {
-  $.ajaxSetup({
-    contentType: 'application/json'
-  });
-  $.post('http://' + window.location.hostname + ':5001/api/v1/places_search/', JSON.stringify({}), 'json')
-  .done( function conn_ok(data, textStatus, jqXHR) {
-  console.log("data: " + data);
-  console.log("textStatus: " + textStatus);
-  console.log("jqXHR: " + jqXHR);
-  })
-.fail( function conn_fail() {
-  console.log("Error while calling search end point");  
+  $.ajax({
+    type: 'POST',
+    url: 'http://' + window.location.hostname + ':5001/api/v1/places_search/',
+    // Empty JSON object (empty dictionary) as data
+    data: JSON.stringify({}), 
+    dataType: 'json',
+    contentType: 'application/json',
+})
+.done(function(data, textStatus, jqXHR) {
+    console.log("data: " + data);
+    console.log("textStatus: " + textStatus);
+    console.log("jqXHR: " + jqXHR);
+})
+.fail(function() {
+    console.log("Error while calling search endpoint");
 });
 }  
