@@ -49,38 +49,36 @@ $(document).ready(function(){
     Loop into the result of the request and create an article tag 
     representing a Place in the section.places. (you can remove the Owner tag in the place description)
      */
-    function updatePlaces() {
+    function getAllPlaces () {
       $.ajax({
-        url: 'http://' + window.location.hostname + ':5001/api/v1/places_search/',
         type: 'POST',
-        contentType: 'application/json',
+        url: 'http://' + window.location.hostname + ':5001/api/v1/places_search/',
+        // Empty JSON object (empty dictionary) as data
         data: JSON.stringify({}), 
-        success: function (data) {
-          $('.places').empty();
-    
-          data.forEach(function (place) {
-            const article = $('<article>');
-            article.html(
-              '<div class="title_box">' +
-              '<h2>' + place.name + '</h2>' +
-              '<div class="price_by_night">$' + place.price_by_night + '</div>' +
-              '</div>' +
-              '<div class="information">' +
-              '<div class="max_guest">' + place.max_guest + ' Guest' + (place.max_guest !== 1 ? 's' : '') + '</div>' +
-              '<div class="number_rooms">' + place.number_rooms + ' Bedroom' + (place.number_rooms !== 1 ? 's' : '') + '</div>' +
-              '<div class="number_bathrooms">' + place.number_bathrooms + ' Bathroom' + (place.number_bathrooms !== 1 ? 's' : '') + '</div>' +
-              '</div>' +
-              '<div class="description">' + place.description + '</div>'
-            );
-            $('.places').append(article);
-          });
-        },
-        error: function () {
-          console.log('Failed to fetch places data.');
-        }
-      });
+        dataType: 'json',
+        contentType: 'application/json',
+      })
+      .done(function(serchResponse) {
+          for (const placeObj of serchResponse) {
+            const placeData = ['<article>',
+              '<div class="title_box">',
+            `<h2>${placeObj.name}</h2>`,
+            `<div class="price_by_night">$${placeObj.price_by_night}</div>`,
+            '</div>',
+            '<div class="information">',
+            `<div class="max_guest">${placeObj.max_guest} Guest${placeObj.max_guest != 1 ? 's' : ''}</div>`,
+            `<div class="number_rooms">${placeObj.number_rooms} Bedroom${placeObj.number_rooms != 1 ? 's' : ''}</div>`,
+            `<div class="number_bathrooms">${placeObj.number_bathrooms} Bathroom${placeObj.number_bathrooms != 1 ? 's' : ''}</div>`,
+            '</div>',
+            '<div class="description">',
+            `${placeObj.description}`,
+            '</div>',
+            '</article>'];
+            $('SECTION.places').append(placeData.join(''));
+          }
+      })
     }
-    updatePlaces();
+      getAllPlaces();
     /**************************************************************************** */
     /*
     5. Filter places by Amenity
