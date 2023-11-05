@@ -1,10 +1,10 @@
 $(document).ready(function(){
-    var amenityIds = {};
+    let amenityIds = {};
 
     $('input[type="checkbox"]').on('change', function(){
-        var $checkbox = $(this);
-        var amenityId = $checkbox.data('id');
-        var amenityName  = $checkbox.data('name');
+        let $checkbox = $(this);
+        let amenityId = $checkbox.data('id');
+        let amenityName  = $checkbox.data('name');
 
         if ($checkbox.is(':checked')){
 
@@ -20,7 +20,7 @@ $(document).ready(function(){
     function updateAmenityList()
     {
         // update the h4 tag and make space after this semicolon except last element
-        var amenityList = Object.values(amenityIds).sort().join(', ');
+        let amenityList = Object.values(amenityIds).sort().join(', ');
         $('.amenities h4').text(amenityList);
     }
 

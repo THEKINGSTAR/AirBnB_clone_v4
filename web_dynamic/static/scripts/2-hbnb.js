@@ -1,21 +1,25 @@
 $(document).ready(function(){
     function updateApiStatusClass() {
-        $.get('http://0.0.0.0:5001/api/v1/status/', function (data) {
-          if (data.status === 'OK') {
+      $.get('http://' + window.location.hostname + ':5001/api/v1/status/')
+      .done( function conn_ok(data) {
+        if (data.status === 'OK') {
             $('#api_status').addClass('available');
           } else {
             $('#api_status').removeClass('available');
           }
+        })
+      .fail( function conn_fail() {
+        $('#api_status').removeClass('available');
         });
       }  
       updateApiStatusClass();
       setInterval(updateApiStatusClass, 5000);
 
-    var amenityIds = {};
+    let amenityIds = {};
     $('input[type="checkbox"]').on('change', function(){
-        var $checkbox = $(this);
-        var amenityId = $checkbox.data('id');
-        var amenityName  = $checkbox.data('name');
+        let $checkbox = $(this);
+        let amenityId = $checkbox.data('id');
+        let amenityName  = $checkbox.data('name');
 
         if ($checkbox.is(':checked')){
 
@@ -30,7 +34,7 @@ $(document).ready(function(){
 
     function updateAmenityList()
     {
-        var amintyList = Object.values(amenityIds).join(',');
+        let amintyList = Object.values(amenityIds).sort().join(', ');
         $('.amenities h4').text(amintyList);
     }
 });
