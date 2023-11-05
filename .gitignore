@@ -3,6 +3,7 @@
 __pycache__/
 **/__pycache__/
 /Pipfile
+/Pipfile.lock
 /file.json
 /heshamtest.py
 .venv/
