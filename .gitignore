@@ -6,4 +6,3 @@ __pycache__/
 /file.json
 /heshamtest.py
 .venv/
-/Pipfile.lock
